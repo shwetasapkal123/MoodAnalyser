@@ -8,8 +8,18 @@ using System.Threading.Tasks;
 
 namespace MoodAnalyser
 {
-    public class MoodAnalyzerReflector
-    {
+    public class MoodAnalyzerFactory
+    {  /// <summary>
+       /// CreateMoodAnalyse method to create object of MoodAnalyse class.
+       /// </summary>
+       /// <param name="className">Name of the class.</param>
+       /// <param name="constructorName">Name of the constructor.</param>
+       /// <returns></returns>
+       /// <exception cref="MoodAnalyzer.MoodAnalyzerException">
+       /// Class not found
+       /// or
+       /// Constructor not found
+       /// </exception>
         public static object CreateMoodAnalyse(string className, string constructorName)
         {
             // create the pattern and checks whether constructor name and class name are equal
@@ -116,8 +126,8 @@ namespace MoodAnalyser
         {
             try
             {
-                Type type = Type.GetType("MoodAnalyzer.AnalyzeMood");
-                object moodAnalyseObject = MoodAnalyzerReflector.CreateMoodAnalyserParameterizedConstructor("MoodAnalyser1.AnalyzeMood", "AnalyzeMood", message);
+                Type type = Type.GetType("MoodAnalyser.MoodAnalyser");
+                object moodAnalyseObject = MoodAnalyzerFactory.CreateMoodAnalyserParameterizedConstructor("MoodAnalyzer.AnalyzeMood", "AnalyzeMood", message);
                 MethodInfo methodInfo = type.GetMethod(methodName);
                 object mood = methodInfo.Invoke(moodAnalyseObject, null);
                 return mood.ToString();

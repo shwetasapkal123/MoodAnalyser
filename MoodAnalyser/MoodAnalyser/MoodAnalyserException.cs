@@ -8,6 +8,7 @@ namespace MoodAnalyser
 {
     //Inheriting base Exception Class.
     //Inheriting base Exception Class.
+    //Inheriting base Exception Class.
     public class MoodAnalyserException : Exception
     {
         public ExceptionType type;

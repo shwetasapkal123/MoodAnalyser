@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace MoodAnalyser
 {
     //Inheriting base Exception Class.
-    public class MoodAnalyzerException : Exception
+    //Inheriting base Exception Class.
+    public class MoodAnalyserException : Exception
     {
         public ExceptionType type;
         //Enumeration
@@ -16,10 +17,11 @@ namespace MoodAnalyser
             NULL_EXCEPTION,
             EMPTY_EXCEPTION,
             NO_SUCH_CLASS,
-            NO_SUCH_CONSTRUCTOR
+            NO_SUCH_CONSTRUCTOR,
+            NO_SUCH_METHOD
         }
         //Exception Constructor.
-        public MoodAnalyzerException(ExceptionType type, string message) : base(message)
+        public MoodAnalyserException(ExceptionType type, string message) : base(message)
         {
             this.type = type;
         }

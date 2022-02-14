@@ -12,28 +12,22 @@ namespace MoodAnalyserTest
         public void GivenMessageShouldReturnHappy()
         {
             ///Follow AAA strategy
-            ///Arrange 
-            MoodAnalyser1 mood = new MoodAnalyser1("I am in Happy Mood");
+            ///Arrange , Act and in last Assert
+            AnalyzeMood mood = new AnalyzeMood("I am in Happy Mood");
             string excepted = "happy";
-            //Act
             var actual = mood.Mood();
-            //Assert
             Assert.AreEqual(excepted, actual);
-            Console.WriteLine(actual);
         }
         [TestMethod]
         [TestCategory("SAD Mood")]
         public void GivenMessageShouldReturnSad()
         {
             ///Follow AAA strategy
-            ///Arrange 
-            MoodAnalyser1 mood = new MoodAnalyser1("I am in SAD Mood");
+            ///Arrange , Act and in last Assert
+            AnalyzeMood mood = new AnalyzeMood("I am in SAD Mood");
             string excepted = "sad";
-            //Act
             var actual = mood.Mood();
-            //Assert
             Assert.AreEqual(excepted, actual);
-            Console.WriteLine(actual);
         }
         [TestMethod]
         [TestCategory("Null Exception")]
@@ -45,17 +39,17 @@ namespace MoodAnalyserTest
             string excepted = "Message cann't be null";
             try
             {
-                MoodAnalyser1 mood = new MoodAnalyser1(message);
+                AnalyzeMood mood = new AnalyzeMood(message);
                 string actual = mood.Mood();
             }
             catch (MoodAnalyzerException ex)
             {
-                Console.WriteLine("Custom Exception :" + ex.Message);
+                Console.WriteLine("Custom Exception :" + ex);
                 Assert.AreEqual(excepted, ex.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Worst Case Exception :" + ex.Message);
+                Console.WriteLine("Worst Case Exception :" + ex);
             }
         }
         [TestMethod]
@@ -63,69 +57,124 @@ namespace MoodAnalyserTest
         public void GivenEmptyShouldReturnCustomException()
         {
             ///Follow AAA strategy
-            ///Arrange 
+            ///Arrange , Act and in last Assert
             string message = "";
             string excepted = "Message cann't be Empty";
             try
             {
-                //Act
-                MoodAnalyser1 mood = new MoodAnalyser1(message);
+                AnalyzeMood mood = new AnalyzeMood(message);
                 string actual = mood.Mood();
             }
             catch (MoodAnalyzerException ex)
             {
-                //Assert
-                Console.WriteLine("Custom Exception :" + ex.Message);
+                Console.WriteLine("Custom Exception :" + ex);
                 Assert.AreEqual(excepted, ex.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Worst Case Exception :" + ex.Message);
+                Console.WriteLine("Worst Case Exception :" + ex);
             }
         }
         /// <summary>
         /// TC-4.1 Returns the mood analyser object
         /// </summary>
         [TestMethod]
+        [TestCategory("Reflection")]
         public void GivenMoodAnalyserReflection_ShouldReturnObject()
         {
-            object expected = new MoodAnalyser1();
-            object actual = FactoryMoodAnalyser.CreateMoodAnalyse("MoodAnalyser.MoodAnalyser1", "MoodAnalyser1");
+            object expected = new AnalyzeMood();
+            object actual = FactoryMoodAnalyser.CreateMoodAnalyse("MoodAnalyser.AnalyzeMood", "AnalyzeMood");
             expected.Equals(actual);
         }
         /// <summary>
         /// TC-4.2 should throw NO_SUCH_CLASS exception.
         /// </summary>
         [TestMethod]
+        [TestCategory("Reflection")]
         public void GivenClassNameImproper_ShouldReturnMoodAnalysisException()
         {
-            string expected = "Class not found No such class";
+            string expected = "Class not found";
             try
             {
-                object actual = FactoryMoodAnalyser.CreateMoodAnalyse("MoodAnalyser.MoodAnalyser1", "MoodAnalyser1");
-                Console.WriteLine(actual);
+                object actual = FactoryMoodAnalyser.CreateMoodAnalyse("Mood.AnalyzeMood", "AnalyzeMood");
             }
-            catch (MoodAnalyzerException excpt)
+            catch (MoodAnalyzerException e)
             {
-                Assert.AreEqual(expected, excpt.Message);
+                Assert.AreEqual(expected, e.Message);
             }
         }
         /// <summary>
         /// TC-4.3 should throw NO_SUCH_CONTRUCTOR exception.
         /// </summary>
         [TestMethod]
+        [TestCategory("Reflection")]
         public void GivenConstructorNameImproper_ShouldReturnMoodAnalysisException()
         {
             string expected = "Constructor not found";
             try
             {
-                object actual = FactoryMoodAnalyser.CreateMoodAnalyse("MoodAnalyser.MoodAnalyser1", "MoodAnalyzer");
-                Console.WriteLine(actual);
+                object actual = FactoryMoodAnalyser.CreateMoodAnalyse("MoodAnalyser.AnalyzeMood", "MoodAnalyzer");
             }
-            catch (MoodAnalyzerException excpt)
+            catch (MoodAnalyzerException e)
             {
-                Assert.AreEqual(expected, excpt.Message);
+                Assert.AreEqual(expected, e.Message);
             }
+        }
+        /// <summary>
+        /// TC-5.1 Returns the mood analyser object with parameterized constructor.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Reflection")]
+        public void GivenMoodAnalyserParameterizedConstructor_ShouldReturnObject()
+        {
+            object expected = new AnalyzeMood("I am Parameter constructor");
+            object actual = FactoryMoodAnalyser.CreateMoodAnalyserParameterizedConstructor("MoodAnalyser.AnalyzeMood", "AnalyzeMood", "I am Parameter constructor");
+            expected.Equals(actual);
+        }
+        /// <summary>
+        /// TC-5.2 should throw NO_SUCH_CLASS exception with parameterized constructor.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Reflection")]
+        public void GivenClassNameImproperParameterizedConstructor_ShouldReturnMoodAnalysisException()
+        {
+            string expected = "Class not found";
+            try
+            {
+                object actual = FactoryMoodAnalyser.CreateMoodAnalyserParameterizedConstructor("MoodAnalyser.AnalyzeMood", "AnalyzeMood", "I am Parameter constructor");
+            }
+            catch (MoodAnalyzerException e)
+            {
+                Assert.AreEqual(expected, e.Message);
+            }
+        }
+        /// <summary>
+        /// TC-5.3 should throw NO_SUCH_CONSTRUCTOR exception with parameterized constructor.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Reflection")]
+        public void GivenImproperParameterizedConstructorName_ShouldReturnMoodAnalysisException()
+        {
+            string expected = "Constructor not found";
+            try
+            {
+                object actual = FactoryMoodAnalyser.CreateMoodAnalyserParameterizedConstructor("MoodAnalyser.AnalyzeMood", "AnalyzeMod", "I am Parameter constructor");
+            }
+            catch (MoodAnalyzerException e)
+            {
+                Assert.AreEqual(expected, e.Message);
+            }
+        }
+        /// <summary>
+        /// UC5-Refactor dry principle
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Reflection")]
+        public void GivenMoodAnalyserOptionalVarible_ShouldReturnObject()
+        {
+            object expected = new AnalyzeMood("I am Parameter constructor");
+            object actual = FactoryMoodAnalyser.CreateMoodAnalyserOptionalVariable("MoodAnalyserProblem.MoodAnalyser", "MoodAnalyser", "I am Parameter constructor");
+            expected.Equals(actual);
         }
     }
 }

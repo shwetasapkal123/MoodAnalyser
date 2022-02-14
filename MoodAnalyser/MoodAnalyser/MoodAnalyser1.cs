@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace MoodAnalyser
 {
-    public class MoodAnalyser1
-    {
-        //variable
+    public class AnalyzeMood
+    { //variable
         public string message;
         /// <summary>
         /// default contructor
         /// </summary>
-        public MoodAnalyser1()
+        public AnalyzeMood()
         {
 
         }
         //parameterized constructor
-        public MoodAnalyser1(string message)
+        public AnalyzeMood(string message)
         {
             this.message = message;
         }

@@ -12,10 +12,11 @@ namespace MoodAnalyserTest
         public void GivenMessageShouldReturnHappy()
         {
             ///Follow AAA strategy
-            ///Arrange , Act and in last Assert
             MoodAnalyser1 mood = new MoodAnalyser1("I am in Happy Mood");
             string excepted = "happy";
+            //Act
             var actual = mood.Mood();
+            //Assert
             Assert.AreEqual(excepted, actual);
             Console.WriteLine(actual);
         }
@@ -24,10 +25,26 @@ namespace MoodAnalyserTest
         public void GivenMessageShouldReturnSad()
         {
             ///Follow AAA strategy
-            ///Arrange , Act and in last Assert
+            ///Arrange 
             MoodAnalyser1 mood = new MoodAnalyser1("I am in SAD Mood");
             string excepted = "sad";
+            //Act
             var actual = mood.Mood();
+            //Assert
+            Assert.AreEqual(excepted, actual);
+        }
+        [TestMethod]
+        [TestCategory("Null")]
+        public void GivenNullShouldReturnHappy()
+        {
+            ///Follow AAA strategy
+            ///Arrange
+            string message = null;
+            MoodAnalyser1 mood = new MoodAnalyser1(message);
+            string excepted = "happy";
+            //Act
+            var actual = mood.Mood();
+            //Assert
             Assert.AreEqual(excepted, actual);
             Console.WriteLine(actual);
         }
